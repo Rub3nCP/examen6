@@ -6,6 +6,11 @@
     <title>@yield('title', 'Mi Página')</title>
 </head>
 <body>
+@include('layouts.header')
+    @include('layouts.menu')
+    @yield('content')  <!-- Aquí se mostrará el contenido dinámico -->
+    @include('layouts.footer')
+  <!-- Aquí se muestra el encabezado común para todas las páginas -->
     <header>
         <h1>Encabezado común para todas las páginas</h1>
     </header>
