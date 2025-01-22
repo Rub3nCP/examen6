@@ -1,7 +1,6 @@
-<!-- src/Views/inicio.blade.php -->
-@extends('layouts.layout') <!-- Hereda la estructura de la plantilla principal -->
+@extends('layouts.layout') 
 
-@section('title', 'Página de Inicio') <!-- Título de la página -->
+@section('title', 'Página de Inicio')
 
 @section('content')
   <h2>Bienvenido a la página de inicio</h2>

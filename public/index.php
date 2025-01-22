@@ -1,53 +1,52 @@
 <?php
 
-// Habilitar la visualización de errores para facilitar el desarrollo
 error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 
-// Cargar las dependencias de Composer
 require '../vendor/autoload.php';
 
 // Usar las clases necesarias
 use Philo\Blade\Blade;
 
-// Definir las rutas de las vistas y la caché
-$views = 'src/Views';  // Ruta a la carpeta que contiene las vistas
-$cache = 'cache';      // Ruta donde se almacenarán las vistas compiladas
+$views = '../src/Views'; 
+$cache = '../cache';     
+
 $blade = new Blade($views, $cache);
 
-// Crear una instancia de AltoRouter
 $router = new AltoRouter();
 
-// Definir la ruta principal para la página de inicio
 $router->map('GET', '/', function() use ($blade) {
-    // Renderiza la vista 'index.blade.php'
+    // Renderizar la vista 'index.blade.php'
     echo $blade->view()->make('index')->render();
 });
 
-// Definir la ruta para la página de empresas (ver ejemplo más abajo)
+// Definir la ruta para la página de empresas
 $router->map('GET', '/empresas', function() use ($blade) {
-    // Aquí, puedes cargar la vista de listado de empresas
+    // Renderizar la vista 'empresa/listado.blade.php'
     echo $blade->view()->make('empresa.listado')->render();
 });
 
-// Si se accede a una ruta que no está definida, mostrar una página 404
+// Definir otras rutas según sea necesario
+// $router->map('GET', '/otra-ruta', function() use ($blade) {
+//     echo $blade->view()->make('otra-vista')->render();
+// });
+
+// Verificar si la ruta actual tiene una coincidencia
 $match = $router->match();
 
-// Verificar si la ruta encontrada tiene una función asignada
+// Si hay una coincidencia para la ruta
 if (is_array($match)) {
     if (is_callable($match['target'])) {
-        // Llamar a la función del controlador si existe
+        // Llamar a la función del controlador si la ruta tiene una función asociada
         call_user_func_array($match['target'], $match['params']);
     } else {
+        // Si la ruta es un controlador/método
         $params = $match['params'];
-        // Crear el controlador y método correspondiente
         $controller = new $match['target'][0];
         $method = $match['target'][1];
         $controller->$method($params);
     }
 } else {
-    // Si la ruta no coincide con ninguna definida, mostrar un error 404
-    echo $blade->view()->make('404')->render();  // Esto buscará la vista 404.blade.php
+    // Si la ruta no coincide con ninguna de las rutas definidas, mostrar la vista 404
+    echo $blade->view()->make('404')->render();
 }
-echo $blade->view()->make('404');
-echo $this->view->make('src/Views/404');
