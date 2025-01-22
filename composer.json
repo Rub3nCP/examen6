@@ -1,0 +1,27 @@
+{
+    "name": "ruben/examen6",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Ruben\\Examen6\\": "src/"
+        },
+        "classmap": [
+            "AltoRouter.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Ruben",
+            "email": "you@example.com"
+        }
+    ],
+    "require": {
+        "altorouter/altorouter": "^2.0",
+        "philo/laravel-blade": "^3.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
+}
