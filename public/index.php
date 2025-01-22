@@ -1,29 +1,41 @@
 <?php
 
-// Cargar Composer y el autoload generado
-require_once __DIR__ . '/../vendor/autoload.php';  // Cargar el autoload generado por Composer
+error_reporting(E_ALL & ~E_DEPRECATED);  // Suprimir las advertencias de desuso
 
-// Usar AltoRouter
-use AltoRouter;
+require '../vendor/autoload.php';  // Autoload de Composer
 
-$router = new AltoRouter();
+use Philo\Blade\Blade;  // Esto sí es necesario
 
-// Definir rutas
-$router->map('GET', '/', function() {
-    echo "Página de inicio";
+// Configuración de rutas y caché
+$views = '../src/views/';
+$cache = '../cache';
+
+// Instancia de Blade
+$blade = new Blade($views, $cache);
+
+// Instancia de AltoRouter
+$router = new AltoRouter();  // No hace falta usar "use AltoRouter" porque ya está cargado
+
+// Definir ruta principal
+$router->map('GET', '/', function() use ($blade) {
+    echo $blade->view()->make('index')->render();  // Asegúrate de que estás renderizando la vista 'index'
 });
 
-$router->map('GET', '/examen', function() {
-    echo "Página del examen";
-});
-
-// Buscar la ruta correspondiente
+// Procesar las rutas
 $match = $router->match();
 
-if ($match) {
-    // Ejecutar la función asociada a la ruta
-    call_user_func_array($match['target'], $match['params']);
+if (is_array($match)) {
+    if (is_callable($match['target'])) {
+        call_user_func_array($match['target'], $match['params']);
+    } else {
+        $params = $match['params'];
+        $controller = new $match['target'][0];
+        $method = $match['target'][1];
+        $controller->$method($params);
+    }
 } else {
-    // Si no se encuentra la ruta
-    echo 'Página no encontrada';
+    echo $blade->view()->make('404')->render();
 }
+// Verifica si esto aparece
+echo $blade->view()->make('index')->render();  // Renderiza la vista
+  // Verifica que esta línea se muestra
