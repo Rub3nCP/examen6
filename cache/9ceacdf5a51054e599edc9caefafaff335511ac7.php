@@ -1,3 +1,0 @@
-<li>
-  example
-</li>

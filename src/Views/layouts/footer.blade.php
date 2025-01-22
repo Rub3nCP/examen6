@@ -1,3 +1,4 @@
 <footer>
-    <p>Creado por: Nombre del alumno o alumna</p>
+  <p>Creado por: Ruben Chedas Pombal</p>
 </footer>
+</html>

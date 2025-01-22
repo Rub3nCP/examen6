@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi página</title>
-</head>
-<body>
-    <h1>Bienvenido a mi página!</h1>
-    <p>Este es el contenido de la vista principal.</p>
-</body>
-</html>
+
+@extends('layouts.content')
+
+@section('title', 'Inicio')
+
+@section('content')
+    <main>
+        <h1>Examen 6</h1>
+    </main>
+    <ul>
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/empresas">Empresas</a></li>
+    <li><a href="/productos">Productos</a></li> 
+</ul>
+@endsection
